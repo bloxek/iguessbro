@@ -50,17 +50,17 @@ static const char* NameOf(TESObjectREFR* r)
     return (n && *n) ? n : "Something";
 }
 
-static float HealthOf(Actor* a) { return a->avOwner.GetActorValue(kAVCode_Health); } // [VERIFY]
+static float HealthOf(Actor* a) { return a->avOwner.Fn_03(eActorVal_Health); }
 
 // Death flavour text by weapon skill (extend freely)
 static const char* DeathText(TESObjectWEAP* w)
 {
     if (!w) return "was killed.";
     switch (w->weaponSkill) {                            // [VERIFY field name]
-        case kAVCode_MeleeWeapons: return "was stabbed to death.";
-        case kAVCode_Unarmed:      return "was beaten to death.";
-        case kAVCode_Explosives:   return "was blown apart.";
-        case kAVCode_EnergyWeapons:return "was burned to a crisp.";
+        case eActorVal_MeleeWeapons: return "was stabbed to death.";
+        case eActorVal_Unarmed:      return "was beaten to death.";
+        case eActorVal_Explosives:   return "was blown apart.";
+        case eActorVal_EnergyWeapons:return "was burned to a crisp.";
         default:                   return "was shot to death.";
     }
 }
@@ -70,7 +70,7 @@ static const char* DeathText(TESObjectWEAP* w)
 // params[0] = attacker, params[1] = weapon (for OnHitWith). Adjust if it differs.
 static void OnHit(TESObjectREFR* thisObj, void* params)
 {
-    if (!thisObj || !thisObj->IsActor()) return;
+    if (!thisObj || (thisObj->typeID != kFormType_Character && thisObj->typeID != kFormType_Creature)) return;
     Actor* victim = (Actor*)thisObj;
 
     float now    = HealthOf(victim);
@@ -143,6 +143,12 @@ __declspec(dllexport) bool NVSEPlugin_Load(NVSEInterface* nvse)
     g_msg    = (NVSEMessagingInterface*)nvse->QueryInterface(kInterface_Messaging);
     g_events = (NVSEEventManagerInterface*)nvse->QueryInterface(kInterface_EventManager);
     if (!g_msg || !g_events) return false;
+
+    g_msg->RegisterListener(nvse->GetPluginHandle(), "NVSE", MsgHandler);
+    g_events->SetNativeEventHandler("OnHit", (NVSEEventManagerInterface::NativeEventHandler)OnHit); // [VERIFY]
+    return true;
+}
+}
 
     g_msg->RegisterListener(nvse->GetPluginHandle(), "NVSE", MsgHandler);
     g_events->SetNativeEventHandler("OnHit", (NVSEEventManagerInterface::NativeEventHandler)OnHit); // [VERIFY]

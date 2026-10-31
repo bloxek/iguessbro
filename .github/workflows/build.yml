@@ -17,8 +17,7 @@ jobs:
         run: |
           mkdir out
           set N=xNVSE\nvse\nvse
-          cl /nologo /LD /O2 /EHsc /std:c++latest /Zc:__cplusplus /FI nvse/prefix.h /DWIN32 /D_WINDOWS /DRUNTIME /DRUNTIME_VERSION=0x040020D0 /D_CRT_SECURE_NO_WARNINGS /wd4996 /I xNVSE /I xNVSE\nvse /I xNVSE\nvse\nvse ClassicCombatLog.cpp %N%\containers.cpp %N%\GameAPI.cpp %N%\GameBSExtraData.cpp %N%\GameData.cpp %N%\GameExtraData.cpp %N%\GameForms.cpp %N%\GameObjects.cpp %N%\GameOSDepend.cpp %N%\GameProcess.cpp %N%\GameRTTI.cpp %N%\GameScript.cpp %N%\GameSettings.cpp %N%\GameTasks.cpp %N%\GameTiles.cpp %N%\GameTypes.cpp %N%\NiTypes.cpp %N%\printf.cpp %N%\SafeWrite.cpp %N%\Utilities.cpp %N%\utility.cpp %N%\GameUI.cpp xNVSE\common\IErrors.cpp xNVSE\common\IDebugLog.cpp xNVSE\common\IFileStream.cpp xNVSE\common\IDataStream.cpp /Fe:out\ClassicCombatLog.dll /link user32.lib
-      - uses: actions/upload-artifact@v4
+          cl /nologo /LD /O2 /EHsc /std:c++latest /Zc:__cplusplus /FI nvse/prefix.h /DWIN32 /D_WINDOWS /DRUNTIME /DRUNTIME_VERSION=0x040020D0 /D_CRT_SECURE_NO_WARNINGS /wd4996 /I xNVSE /I xNVSE\nvse /I xNVSE\nvse\nvse ClassicCombatLog.cpp %N%\containers.cpp %N%\GameAPI.cpp %N%\GameBSExtraData.cpp %N%\GameData.cpp %N%\GameExtraData.cpp %N%\GameForms.cpp %N%\GameObjects.cpp %N%\GameOSDepend.cpp %N%\GameProcess.cpp %N%\GameRTTI.cpp %N%\GameScript.cpp %N%\GameSettings.cpp %N%\GameTasks.cpp %N%\GameTiles.cpp %N%\GameTypes.cpp %N%\NiTypes.cpp %N%\printf.cpp %N%\SafeWrite.cpp %N%\Utilities.cpp %N%\utility.cpp %N%\GameUI.cpp xNVSE\common\IErrors.cpp xNVSE\common\IDebugLog.cpp xNVSE\common\IFileStream.cpp xNVSE\common\IDataStream.cpp /Fe:out\ClassicCombatLog.dll /link user32.lib shell32.lib comdlg32.lib advapi32.lib
         with:
           name: ClassicCombatLog
           path: out/ClassicCombatLog.dll

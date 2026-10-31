@@ -149,9 +149,3 @@ __declspec(dllexport) bool NVSEPlugin_Load(NVSEInterface* nvse)
     return true;
 }
 }
-
-    g_msg->RegisterListener(nvse->GetPluginHandle(), "NVSE", MsgHandler);
-    g_events->SetNativeEventHandler("OnHit", (NVSEEventManagerInterface::NativeEventHandler)OnHit); // [VERIFY]
-    return true;
-}
-}
